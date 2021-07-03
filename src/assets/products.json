@@ -1,0 +1,55 @@
+{
+	"data": [
+		{
+			"id": "1",
+            "name": "Free Ticket",
+            "description": "Free ticket for anyone to make a valuable contribution towards our future online events programme. Thank you.",
+			"saleEndDate": "2021-06-30",
+			"image": "",
+			"price": 0,
+            "inventoryCount": 100,
+            "noOfTicketPurchased":0,
+            "type":"ticket",
+            "quantity":1,
+            "taxPercentage":18
+        },
+        {
+			"id": "2",
+            "name": "Alumni VIP Ticket",
+            "description": "This livestream will broadcast via a private YouTube link that will be sent to ticket purchasers an hour prior to showtime",
+			"saleEndDate": "2021-06-23",
+			"image": "",
+			"price": 3500.00,
+            "inventoryCount": 10,
+            "noOfTicketPurchased":0,
+            "type":"ticket",
+            "quantity":1,
+            "taxPercentage":18
+        },
+        {
+			"id": "3",
+            "name": "Donate",
+            "description": "Access to arts is vital. Pay what you can.",
+			"saleEndDate": "2021-06-30",
+            "image": "",
+            "noOfTicketPurchased":0,
+			"options": [50,100,200,500],
+            "type":"donation",
+            "price": null,
+            "taxPercentage":0
+        },
+        {
+			"id": "4",
+            "name": "Book: Good Strategy - Bad Strategy",
+            "description": "Learn from the experts of business process management",
+			"saleEndDate": "2021-06-30",
+            "image": "../../../assets/image1.png",
+            "noOfTicketPurchased":0,
+			"options": [50,100,200,500],
+            "type":"book",
+            "price": 10,
+            "inventoryCount": 20,
+            "taxPercentage":10
+		}
+	]
+}

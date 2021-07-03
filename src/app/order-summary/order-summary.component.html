@@ -1,0 +1,68 @@
+<div style="padding: 1em;">    
+    <div class="item-name one-padding">
+        Order Summary
+    </div>
+    <div *ngIf="model.isChange">
+    <div class="one-padding" style="border-bottom:1px solid">
+        <div *ngFor="let item of orderDetails" class="item-description">
+            <div class="grid-container" *ngIf="item.quantity>0||(item.type=='donation' && item.price>0)">
+                <div class="grid-item" style="text-align: left;">
+                    <span *ngIf="item.type!='donation'">
+                        <span *ngIf="edit">
+                                <select class="form-control" name="quantity" required [(ngModel)]="item.quantity" (ngModelChange)="model.onChange($event,item.id)">
+                                        <option *ngFor="let val of item.ticketMaxArray" [value]="val">
+                                            {{val}}
+                                          </option>
+                                      </select>
+                                      *{{item.name}}
+                        </span>
+                        <span *ngIf="!edit">
+                            <!-- We can also have +,- button -->
+                            {{item.quantity}}*{{item.name}}
+                        </span>
+
+                    </span>
+                    <span *ngIf="item.type=='donation'">
+                        {{item.name}}
+                    </span>
+                </div>
+                <div class="grid-item" style="text-align: right;">
+                    {{item.type=='donation'?item.price:item.quantity*item.price | currency}}
+                </div>
+            </div> 
+        </div>
+        <div *ngIf="isEditable" class="promo-code" (click)="edit=true">Edit</div>
+    </div>
+    <div class="one-padding">
+        <div class="subtotal-header" style="width: 100%;">
+            Subtotal
+        </div>
+    <div class="grid-container subtotal">
+        <div class="grid-item" style="text-align: left;">
+                SubTotal
+        </div>
+        <div class="grid-item" style="text-align: right;">
+            {{model.subTotal |currency}}
+        </div>
+        <div class="grid-item" style="text-align: left;">
+            Taxes
+        </div>
+        <div class="grid-item" style="text-align: right;">
+            {{model.taxTotal | currency}}
+        </div>
+        <div class="grid-item total" style="text-align: left;">
+            Total
+        </div>
+        <div class="grid-item total" style="text-align: right;">
+            {{model.total | currency}}
+        </div>
+    </div>
+    </div>
+    <div class="promo-code" style="padding: 15px;">Have a promo code?</div>
+    </div>
+</div>
+<div style="width: 100%;height: 30px; background: #E5E5E5;">
+</div>
+<div [ngStyle]="{ 'background': model.isChange?'#0EB58A':'grey'}" style="font-weight: 600;font-size: 18px;width: 100%; text-align: center;color:white;" (click)=" model.isChange ? model.reDirecttoSubmitPage():''">
+    {{buttonHeader}}
+</div>

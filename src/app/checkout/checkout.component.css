@@ -1,0 +1,46 @@
+.ticket-name{
+    font-family: Salesforce Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 17px;
+    line-height: 18px;
+}
+input{
+    border-radius:5px;
+    padding: 0.5em;
+    margin: 0.5em;
+    width: 95%;
+}
+select{
+    border-radius:5px;
+    padding: 0.5em;
+    margin: 0.5em;
+    width: 98%;
+}
+.receive-notification{
+    font-family: Salesforce Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 22px;
+    color: #000000;
+    padding-left: 1%;
+}
+.rush-text{
+    font-family: Salesforce Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 18px;
+    color: #000000;
+
+}
+.hyperlink-text{
+    font-family: Salesforce Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    line-height: 22px;
+    text-align: right;
+    color: #0070D2;
+}

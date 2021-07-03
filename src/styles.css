@@ -1,1 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
+.one-padding{
+    padding: 7px;
+}
+.zero-padding{
+    padding: 0;
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: 60% 40%;
+    grid-auto-rows: minmax(min-content, max-content);
+  }
+  .grid-item {
+    padding: 0.3em 0;
+  }
+  .flex-container {
+    display: flex;
+    align-items: flex-start;
+  }
+  .flex-container > div {
+    padding: 1em;
+    background-color: white;
+    margin: 10px;
+    line-height: 75px;
+    font-size: 30px;
+  }

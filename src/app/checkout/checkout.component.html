@@ -1,0 +1,47 @@
+<div class="flex-container" style="width:70%;padding-left: 15%">
+    <div style="width: 70%">
+        <div  style="border-bottom: 1px solid;padding: 0.3em 0;margin: 0.3em 0">
+            Tickets
+            <div>
+            <div style="display :inline-block;padding: 0.5em;">
+                    <img src="../../../assets/Vector.png" />
+            </div>
+            <div style="display :inline-block;padding: 0.5em;">
+                <div class='rush-text'>In a rush?</div>
+                <div class='rush-text'>Register your tickets now or after checking out. Your choice. </div>
+            </div>
+            <div class="hyperlink-text" style="display :inline-block;padding: 0.5em;">Fill this out later</div>
+        </div>
+        </div>
+    <div *ngFor="let item of userProductArray; let i=index" class="one-padding">
+        <div *ngIf="item.product.type=='ticket'"  style="border-bottom: 1px solid;padding: 1em 0;margin: 1em 0">
+        <div class="ticket-name">Attendee {{i+1}} - {{item.product.name}} </div>
+        <div *ngIf="item.product.name=='Free Ticket'">
+            <input placeholder="First Name *" style="width: 45%" type="text" class="form-control" [name]="'fname'+i" required [(ngModel)]="item.user.fname" #fname="ngModel"/>
+            <input placeholder="Last Name *" style="width: 45%" type="text" class="form-control" [name]="'lname'+i"  required [(ngModel)]="item.user.lname"  #lname="ngModel" />
+            <input placeholder="Email *" type="text" class="form-control" required [name]="'email'+i"  [(ngModel)]="item.user.email"  #email="ngModel" />
+            <div class="receive-notification">
+                <div>Would you like to receive the branded connections and other e-communications from the us?</div>
+                <div><input type="radio" style="width: 5%" [(ngModel)]="item.user.receiveNotification" value="Yes"> Yes</div>
+                <div><input type="radio" style="width: 5%" [(ngModel)]="item.user.receiveNotification" value="No"> No</div>
+            </div>
+        </div>
+        <div *ngIf="item.product.type=='ticket' && item.product.name=='Alumni VIP Ticket'">
+            <input placeholder="First Name *" style="width: 45%" type="text" class="form-control" [name]="'fname'+i" required [(ngModel)]="item.user.fname" #fname="ngModel" />
+            <input placeholder="Last Name *" style="width: 45%" type="text" class="form-control" required  [name]="'lname'+i" [(ngModel)]="item.user.lname" #lname="ngModel"  />
+            <input placeholder="Email *" type="text" class="form-control" required [(ngModel)]="item.user.email"  [name]="'email'+i" #email="ngModel"  />
+            <input placeholder="Job Title *" type="text" class="form-control" required [(ngModel)]="item.user.jobTitle"  [name]="'jobTitle'+i" #jobTitle="ngModel"  />
+            <input placeholder="Company *" type="text" class="form-control" required [(ngModel)]="item.user.company"  [name]="'company'+i" #company="ngModel"  />
+            <select class="form-control" required [(ngModel)]="item.user.country" [name]="'country'+i" #country="ngModel">
+                    <option *ngFor="let val of countries" [value]="val">
+                        {{val}}
+                      </option>
+                  </select>
+        </div>
+        </div>
+    </div>
+    </div>
+    <div style="width: 30%;padding: 0em;">
+        <app-order-summary [orderDetails]="products" [model]="model" buttonHeader="Review Sessions" [isEditable]="true"></app-order-summary>
+    </div>
+    </div>
