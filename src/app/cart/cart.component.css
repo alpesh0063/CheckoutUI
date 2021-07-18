@@ -38,3 +38,11 @@
     text-align: left;
 
 }
+.wish-list{
+    font-family: Salesforce Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 22px;
+    background: #E1DACF4F;
+}

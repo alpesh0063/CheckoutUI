@@ -12,4 +12,5 @@ export interface Product {
     ticketMaxArray?:number[];
     options?:number[];
     taxPercentage:number;
+    isWaitlist?:boolean;
 }

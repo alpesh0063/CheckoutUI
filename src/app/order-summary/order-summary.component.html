@@ -4,12 +4,12 @@
     </div>
     <div *ngIf="model.isChange">
     <div class="one-padding" style="border-bottom:1px solid">
-        <div *ngFor="let item of orderDetails" class="item-description">
+        <div *ngFor="let item of orderDetails;let count=index" class="item-description">
             <div class="grid-container" *ngIf="item.quantity>0||(item.type=='donation' && item.price>0)">
                 <div class="grid-item" style="text-align: left;">
                     <span *ngIf="item.type!='donation'">
                         <span *ngIf="edit">
-                                <select class="form-control" name="quantity" required [(ngModel)]="item.quantity" (ngModelChange)="model.onChange($event,item.id)">
+                                <select class="form-control" name="quantity" required [(ngModel)]="item.quantity" (ngModelChange)="model.onChange($event,count)">
                                         <option *ngFor="let val of item.ticketMaxArray" [value]="val">
                                             {{val}}
                                           </option>
@@ -18,7 +18,7 @@
                         </span>
                         <span *ngIf="!edit">
                             <!-- We can also have +,- button -->
-                            {{item.quantity}}*{{item.name}}
+                            {{item.isWaitlist?item.inventoryCount:item.quantity}}*{{item.name}}
                         </span>
 
                     </span>
@@ -27,11 +27,36 @@
                     </span>
                 </div>
                 <div class="grid-item" style="text-align: right;">
-                    {{item.type=='donation'?item.price:item.quantity*item.price | currency}}
+                    {{(item.type=='donation'?item.price:item.isWaitlist?(item.inventoryCount)*item.price:item.quantity*item.price) | currency}}
                 </div>
             </div> 
         </div>
-        <div *ngIf="isEditable" class="promo-code" (click)="edit=true">Edit</div>
+        <div *ngFor="let item of waitList" class="wait-list-description">
+                <div class="grid-container" *ngIf="item.quantity>0||(item.type=='donation' && item.price>0)">
+                    <div class="grid-item" style="text-align: left;">
+                        <span *ngIf="item.type!='donation'">
+                            <!-- <span *ngIf="edit">
+                                    <select class="form-control" name="quantity" required [(ngModel)]="item.quantity" (ngModelChange)="model.onChange($event,item.id)">
+                                            <option *ngFor="let val of item.ticketMaxArray" [value]="val">
+                                                {{val}}
+                                              </option>
+                                          </select>
+                                          *{{item.name}}
+                            </span> -->
+                            <span *ngIf="!edit">
+                                <!-- We can also have +,- button -->
+                                {{item.quantity}}*{{item.name}}
+                            </span>
+    
+                        </span>
+                    </div>
+                    <div class="grid-item" style="text-align: right;">
+                        {{item.quantity*item.price | currency}}
+                    </div>
+                </div> 
+            </div>
+        <div *ngIf="isEditable&&!edit" class="promo-code" (click)="edit=true">Edit</div>
+        <div *ngIf="isEditable&&edit" class="promo-code" (click)="edit=false">Save</div>
     </div>
     <div class="one-padding">
         <div class="subtotal-header" style="width: 100%;">
@@ -50,6 +75,12 @@
         <div class="grid-item" style="text-align: right;">
             {{model.taxTotal | currency}}
         </div>
+        <div class="grid-item" *ngIf="model.totalDiscount>0" style="text-align: left;">
+                Discount
+            </div>
+            <div class="grid-item" *ngIf="model.totalDiscount>0" style="text-align: right;">
+                {{model.totalDiscount | currency}}
+            </div>
         <div class="grid-item total" style="text-align: left;">
             Total
         </div>
@@ -58,7 +89,15 @@
         </div>
     </div>
     </div>
-    <div class="promo-code" style="padding: 15px;">Have a promo code?</div>
+    <div class="promo-code" style="padding: 0 15px;" (click)="isPromoCodeVisible=true;" >Have a promo code?
+        <div style="color:#0EB58A;" *ngIf="model.promoCode!=''">Promo Code {{model.promoCode}} Applied</div>
+    </div>
+    <div style="padding: 0 15px;" *ngIf="isPromoCodeVisible">
+            <input placeholder="Promo Code" style="width: 80px" type="text" class="form-control" [name]="model.promocode" [(ngModel)]="model.promocode" #promocode="ngModel"/>
+            <span class="promo-code-button" (click)="model.applyPromo(model.promocode)">Apply</span>
+    </div>
+    <div class="one-padding error-code">{{model.orderError}}</div>
+    
     </div>
 </div>
 <div style="width: 100%;height: 30px; background: #E5E5E5;">

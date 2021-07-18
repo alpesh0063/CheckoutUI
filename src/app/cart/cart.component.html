@@ -1,6 +1,6 @@
 <div class="flex-container" style="width:70%;padding-left: 15%">
 <div style="width: 70%">
-<div *ngFor="let item of products" class="one-padding" style="border-bottom: 1px solid;">
+<div *ngFor="let item of products;let count=index" class="one-padding" style="border-bottom: 1px solid;">
     <span style="display: inline-block;" *ngIf="item.image!=''">
         <img [src]="item.image" />
     </span>
@@ -17,12 +17,12 @@
     <div class="donation-text one-padding" *ngIf="item.type=='donation'">
         I want to donate
         <span *ngFor="let temp of item.options">
-            <span style="padding: 0.2em 0.5em; border:1px solid;margin: 0.5em;border-radius: 5px;" [ngStyle]="{background:temp == item.price?'#7D7D7D':''}" (click)="item.price=temp;onChange($event)" >
+            <span style="padding: 0.2em 0.5em; border:1px solid;margin: 0.5em;border-radius: 5px;" [ngStyle]="{background:temp == item.price?'#7D7D7D':''}" (click)="item.price=temp;onChange($event,count)" >
                 {{temp | currency}}
             </span>
         </span>
         <span>
-            <input placeholder="Enter amount" type="number"class="form-control"  id="price" required [(ngModel)]="item.price" name="price" (ngModelChange)="onChange($event)" />
+            <input placeholder="Enter amount" type="number"class="form-control"  id="price" required [(ngModel)]="item.price" name="price" (ngModelChange)="onChange($event,count)" />
         </span>
     </div>
     <div class="item-price one-padding" *ngIf="item.type=='ticket' || item.type=='book'">
@@ -35,17 +35,37 @@
              <!-- <select id="item.quantity" name="item.quantity" [(ngModel)]="item.quantity" class="form-control">
                 <option *ngFor="let temp of item.ticketMaxArray;" [value]="temp">{{temp}}</option>
               </select> -->
-              <select class="form-control"  id="quantity" required [(ngModel)]="item.quantity" name="quantity" (ngModelChange)="onChange($event)">
+              <select class="form-control"  id="quantity" required [(ngModel)]="item.quantity" name="quantity" (ngModelChange)="onChange($event,count)">
                   <option *ngFor="let val of item.ticketMaxArray" [value]="val">
                       {{val}}
                     </option>
                 </select>
         </span>
     </div>
+    <div *ngIf="item.type=='ticket' && item.inventoryCount<10" class="wish-list">
+        <div class="one-padding" *ngIf="item.inventoryCount < 5 && item.inventoryCount >= item.quantity">Only {{item.inventoryCount}} tickets available. 
+            <!-- though there is logic for waitlist in Figma in my design it should be logical -->
+            <!-- <span *ngIf="item.isWaitlist!=true" style="color:#0070D2" (click)="item.isWaitlist=true;addTicketToWaitlist(item);">
+                Join waitlist
+            </span> -->
+        </div>
+        <div class="one-padding" *ngIf="item.inventoryCount < item.quantity && !item.isWaitlist">
+            {{item.inventoryCount}} Ticket Added to cart. Want to join the waitlist for {{item.quantity-item.inventoryCount}} tickets? 
+            <span *ngIf="!item.isWaitlist" style="color:#0070D2" (click)="item.isWaitlist=true;addTicketToWaitlist(item);">
+                Join waitlist
+            </span>
+        </div>
+        <div class="one-padding" *ngIf="item.inventoryCount < item.quantity && item.isWaitlist">
+            {{item.quantity-item.inventoryCount}} Tickets Waitlisted. 
+            <span *ngIf="item.isWaitlist" style="color:#0070D2" (click)="item.isWaitlist=false;removeTicketToWaitlist(item);">
+                Cancel
+            </span>
+        </div>
+    </div>
 </span>
 </div>
 </div>
 <div style="width: 30%;padding: 0em;">
-    <app-order-summary [orderDetails]="products" [model]="model" buttonHeader="Checkout" ></app-order-summary>
+    <app-order-summary [orderDetails]="products" [waitList]="waitList" [model]="model" buttonHeader="Checkout" ></app-order-summary>
 </div>
 </div>
